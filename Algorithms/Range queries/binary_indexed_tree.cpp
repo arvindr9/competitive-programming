@@ -9,7 +9,7 @@ void add(int k, int x, int n, vector<int> &tree) {
     }
 }
 
-int sum(int k, vector<int> tree) {
+int sum(int k, vector<int> tree) { //the sum from index l to index r is equal to sum(r, tree) - sum(l-1, tree)
     int ret = 0;
     while(k >= 1) {
         ret += tree[k];
