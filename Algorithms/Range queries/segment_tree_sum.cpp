@@ -2,6 +2,10 @@
 
 using namespace std;
 
+int nextPwr(int n) {
+    return(pow(2, log2(n)) < n ? pow(2, log2(n) + 1) : n);
+}
+
 void add(int k, int val, int n, vector<int> & tree) {
     k += n;
     while(k >= 1) {
@@ -26,10 +30,11 @@ int sum(int a, int b, int n, vector<int> tree) {
 int main() {
     int n;
     cin >> n;
-    vector<int> tree(2*n - 1);
-    vector<int> arr(n);
+    int len = nextPwr(n);
+    vector<int> tree(2*len - 1);
+    vector<int> arr(len);
     for(int i = 0; i < n; i++) {
         cin >> arr[i];
-        add(i, arr[i], n, tree);
+        add(i, arr[i], len, tree);
     }
 }
