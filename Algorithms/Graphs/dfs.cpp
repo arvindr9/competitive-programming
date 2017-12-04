@@ -12,12 +12,10 @@ void construct(vector<vector<int>> &adj, int m) {
     }
 }
 void dfs(vector<vector<int>> adj, int index, vector<int> &visited) {
-    visited[0] = 1;
     visited[index] = 1;
     cout << index << "\n";
     for(int num: adj[index]) {
         if(visited[num]) continue;
-        visited[num] = 1;
         dfs(adj, num, visited);
     }
 }
@@ -28,6 +26,7 @@ int main() {
     vector<vector<int>> adj(n+1);
     construct(adj, m);
     vector<int> visited(n+1);
+    visited[0] = 1;
     dfs(adj, 1, visited);
 
 }
