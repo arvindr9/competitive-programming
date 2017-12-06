@@ -24,7 +24,9 @@ void add_lazy(int l, int r, int n, int k, int x, int y, vector<int> &tree, vecto
     if(x < l && y > r) {overlap = y-x+1;}
     else if (x >= l) overlap = r - x + 1;
     else overlap = r - y + 1;
-    tree[k] += 2 * overlap;
+    tree[k] += n * overlap;
+    tree[k] += lazy[k] * (y-x+1);
+    lazy[2*k] = lazy[k]; lazy[2*k+1] = lazy[k]; lazy[k] = 0;
     int d = (x+y)/2;
     add_lazy(l, r, n, 2*k, x, d, tree, lazy);
     add_lazy(l, r, n, 2*k+1, d+1, y, tree, lazy);
@@ -32,6 +34,8 @@ void add_lazy(int l, int r, int n, int k, int x, int y, vector<int> &tree, vecto
 int lazy_sum(int l, int r, int k, int x, int y, vector<int> &tree, vector<int> &lazy) {
     if(r < x || l > y) return 0;
     if(x >= l && y <= r) return tree[k];
+    tree[k] += lazy[k] * (y-x+1);
+    lazy[2*k] = lazy[k]; lazy[2*k+1] = lazy[k]; lazy[k] = 0;
     int d = (x+y)/2;
     return lazy_sum(l, r, 2*k, x, d, tree, lazy) + lazy_sum(l, r, 2*k+1, d+1, y, tree, lazy); 
 }
