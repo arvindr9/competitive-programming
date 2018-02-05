@@ -2,6 +2,8 @@
 
 using namespace std;
 
+#define SHOW(a) std::cout << #a << ": \n"
+
 int maxn = 2000;
 stack<int> s;
 int counter = 0;
@@ -20,7 +22,7 @@ int string_to_node(string s) {
     if(s[0] == '~') {
         return (2 * (s[1] - 'a') + 1);
     }
-    return 2 * s[0];
+    return 2 * (s[0] - 'a');
 }
 
 int find_not(int node) {
@@ -93,7 +95,7 @@ int main() {
             dfsSecond(v);
         }
     }
-
+    
     for(int i = 0; i < m; i++) {
         int x = edges[i].first, y = edges[i].second;
         if(component[x] == component[find_not(x)] || component[y] == component[find_not(y)]) {
