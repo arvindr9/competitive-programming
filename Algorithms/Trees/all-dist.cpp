@@ -1,3 +1,7 @@
+/**
+    NAIPC 2016 Tourists: https://open.kattis.com/problems/tourists/
+    Solution Complexity: O(n * log n * log n)
+**/
 #include <bits/stdc++.h>
 
 using namespace std;
