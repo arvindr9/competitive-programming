@@ -1,42 +1,46 @@
 #include <bits/stdc++.h>
 
 using namespace std;
-typedef pair<int, int> pi;
-typedef priority_queue<pi> pqueue;
+const int MAXN = 1000;
+vector<pair<int, int>> adj[MAXN];
+int dist[MAXN];
+bool processed[MAXN]; 
+const int INF = INT_MAX >> 1;
 
-int INF = INT_MAX;
+int n, m;
 
 int main() {
-    int n, m;
+    ios::sync_with_stdio(0);
+    cin.tie(0);
     cin >> n >> m;
-    vector<int> distance(n+1);
-    vector<vector<pi>> adj(n+1);
-    vector<bool> processed(n+1);
+    priority_queue< pair<int, int> > q;
     for(int i = 1; i <= m; i++) {
         int a, b, w;
         cin >> a >> b >> w;
         adj[a].push_back({b, w});
         adj[b].push_back({a, w});
     }
-    for(int i = 1; i <= n; i++) distance[i] = INF;
+    for(int i = 1; i <= n; i++) {
+        dist[i] = INF;
+    }
     int x;
     cin >> x;
-    pqueue q;
-    distance[x] = 0;
+    dist[x] = 0;
     q.push({0, x});
     while(!q.empty()) {
         int a = q.top().second; q.pop();
         if(processed[a]) continue;
+        processed[a] = true;
         for(auto u: adj[a]) {
             int b = u.first, w = u.second;
-            if(distance[a] + w < distance[b]) {
-                distance[b] = distance[a] + w;
-                q.push({-distance[b], b});
+            if(dist[a] + w < dist[b]) {
+                dist[b] = dist[a] + w;
+                q.push({-dist[b], b});
             }
         }
     }
-    for(int i = 1; i <= n; i++) {
-        cout << distance[i] <<"\n";
-    }
 
+    for(int i = 1; i <= n; i++) {
+        cout << dist[i] << "\n";
+    }
 }
