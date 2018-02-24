@@ -2,8 +2,6 @@
 
 using namespace std;
 
-#define SHOW(a) std::cout << #a << ": \n"
-
 int maxn = 2000;
 stack<int> s;
 int counter = 0;
