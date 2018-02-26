@@ -6,7 +6,7 @@ ostringstream oss;
 oss << n;
 result = oss.str();
 
-//Int to string
+//string to int
 
 string text = "456";
 int num;
