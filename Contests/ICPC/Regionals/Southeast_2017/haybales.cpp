@@ -14,8 +14,8 @@ bool accessible[maxn][maxn];
 int n, k;
 
 int main() {
-    freopen("haybales.in", "r", stdin);
-    freopen("haybales.out", "w", stdout);
+    //freopen("haybales.in", "r", stdin);
+    //freopen("haybales.out", "w", stdout);
     ios::sync_with_stdio(0);
     cin.tie(0);
     cin >> n >> k;
