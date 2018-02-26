@@ -7,8 +7,8 @@ typedef long long ll;
 const int maxn = 2050;
 const int large = 987654321;
 
-map<int, deque<ll>> maxdpi;
-map<int, deque<ll>> maxdpj;
+map<int, deque<ll>> dpwindowi;
+map<int, deque<ll>> dpwindowj;
 ll dp[maxn][maxn];
 bool accessible[maxn][maxn];
 int n, k;
@@ -34,23 +34,23 @@ int main() {
     }
     for (int j = n; j >= 1; j--) {
         for (int i = n; i >= 1; i--) {
-            if (j + k + 1 <= n && maxdpi[i].size() != 0 && maxdpi[i].front() == dp[i][j + k + 1]) {
-                maxdpi[i].pop_front();
+            if (j + k + 1 <= n && dpwindowi[i].size() != 0 && dpwindowi[i].front() == dp[i][j + k + 1]) {
+                dpwindowi[i].pop_front();
             }
-            if (i + k + 1 <= n && maxdpj[j].size() != 0 && maxdpj[j].front() == dp[i + k + 1][j]) {
-                maxdpj[j].pop_front();
+            if (i + k + 1 <= n && dpwindowj[j].size() != 0 && dpwindowj[j].front() == dp[i + k + 1][j]) {
+                dpwindowj[j].pop_front();
             }
             if (!accessible[i][j]) continue;
-            if (maxdpi[i].size() != 0) dp[i][j] = min(dp[i][j], 1 + maxdpi[i].front());
-            if (maxdpj[j].size() != 0) dp[i][j] = min(dp[i][j], 1 + maxdpj[j].front());
-            while (maxdpi[i].size() != 0 && dp[i][j] < maxdpi[i].back()) {
-                maxdpi[i].pop_back();
+            if (dpwindowi[i].size() != 0) dp[i][j] = min(dp[i][j], 1 + dpwindowi[i].front());
+            if (dpwindowj[j].size() != 0) dp[i][j] = min(dp[i][j], 1 + dpwindowj[j].front());
+            while (dpwindowi[i].size() != 0 && dp[i][j] < dpwindowi[i].back()) {
+                dpwindowi[i].pop_back();
             }
-            maxdpi[i].push_back(dp[i][j]);
-            while (maxdpj[j].size() != 0 && dp[i][j] < maxdpj[j].back()) {
-                maxdpj[j].pop_back();
+            dpwindowi[i].push_back(dp[i][j]);
+            while (dpwindowj[j].size() != 0 && dp[i][j] < dpwindowj[j].back()) {
+                dpwindowj[j].pop_back();
             }
-            maxdpj[j].push_back(dp[i][j]);
+            dpwinodwj[j].push_back(dp[i][j]);
         }
     }
     if (dp[1][1] == large) dp[1][1] = -1;
