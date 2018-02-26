@@ -13,25 +13,6 @@ ll dp[maxn][maxn];
 bool accessible[maxn][maxn];
 int n, k;
 
-void printB() {
-    for(int i = 1; i <= n; i++) {
-        for(int j = 1; j <= n; j++) {
-            cout << dp[i][j] << " ";
-        }
-        cout << "\n";
-    }
-}
-// void printSets(int i, int j) {
-//     for(auto i: maxdpi[i]) {
-//         cout << "(" << i.first << "," << i.second << "), ";
-//     }
-//     cout << "\n";
-//     for(auto i: maxdpj[j]) {
-//         cout << "(" << i.first << "," << i.second << "), ";
-//     }
-//     cout << "\n";
-// }
-
 int main() {
     freopen("haybales.in", "r", stdin);
     freopen("haybales.out", "w", stdout);
@@ -72,7 +53,6 @@ int main() {
             maxdpj[j].push_back(dp[i][j]);
         }
     }
-    //printB();
     if(dp[1][1] == large) dp[1][1] = -1;
     cout << dp[1][1] << "\n";
 }
