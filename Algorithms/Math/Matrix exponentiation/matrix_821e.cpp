@@ -81,6 +81,7 @@ int main() {
     }
     int i = 1;
     vec.mat[0][0] = 1;
+    print(vec, fout);
     int curr = 0;
     int next = 0;
     for(i = 1; i <= n; i++) {
@@ -95,8 +96,11 @@ int main() {
             }
             if(i < n) {
                 vec = multiply(exponentiate(transition, next - curr), vec);
+                //print(vec, fout);
             } else if(i == n) {
                 vec = multiply(exponentiate(transition, k - curr), vec);
+                //print(vec, fout);
+                break;
             }
         }
         matrix transition2;
@@ -106,6 +110,7 @@ int main() {
             transition2.mat[ii][ii-1] = transition2.mat[ii][ii] = transition2.mat[ii][ii+1] = 1;
         }
         vec = multiply(transition2, vec);
+        print(vec, fout);
     }
     cout << vec.mat[0][0] << "\n";
 
