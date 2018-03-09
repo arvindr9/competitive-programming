@@ -15,7 +15,7 @@ const ll x = 42863052;
 const ll x2 = 47825835;
 set<ll> set1; //stores hashcodes
 map<ll, set<char>> mapc; //stores the characters that are zeroed to generate each hashcode
-map<ll, set<int>> mapi; //stores the indexes that are zeroed to generate each hashcode
+map<ll, set<int>> mapi; //stores the indices of the characters that are zeroed to generate each hashcode
 set<ll> set2;
 map<ll, set<char>> mapc2;
 map<ll, set<int>> mapi2;
