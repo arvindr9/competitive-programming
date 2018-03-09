@@ -45,7 +45,7 @@ void insertHashes(string s) {
     constructHashes(s);
     int len = s.size();
     for(int i = 0; i < len; i++) {
-        ll hash = (h - ((s[i] - '0') * poww[len - i - 1]) % p + p) % p;
+        ll hash = (h - ((s[i] - '0') * poww[len - i - 1]) % p + p) % p; //The hash of the string created by setting the ith character to '0'
         ll hash2 = (h2 - ((s[i] - '0') * poww2[len - i - 1]) % p + p) % p;
         set1.insert(hash);
         mapc[hash].insert(s[i]);
