@@ -53,8 +53,8 @@ void insertHashes(string s) {
     constructHashes(s);
     int len = s.size();
     for(int i = 0; i < len; i++) {
-        ll hash = (h - ((s[i] - '0') * poww[len - i - 1]) % p + p) % p;
         //The hash of the string created by setting the ith character to '0'
+        ll hash = (h - ((s[i] - '0') * poww[len - i - 1]) % p + p) % p;
         ll hash2 = (h2 - ((s[i] - '0') * poww2[len - i - 1]) % p + p) % p;
         set1.insert(hash);
         mapc[hash].insert(s[i]);
@@ -71,11 +71,11 @@ void checkValidity(string s) {
     for(int i = 0; i < len; i++) {
         ll hash = (h - ((s[i] - '0') * poww[len - i - 1]) % p + p) % p;
         ll hash2 = (h2 - ((s[i] - '0') * poww2[len - i - 1]) % p + p) % p;
+        //the minimum number of distinct characters that should have been zeroed during
+        //the preprocessing step to generate the hash (this is equal to 2 if there is a memory
+        //string that is equal to the query string and 1 otherwise).
         unsigned int req_size = 1 + (mapc[hash].count(s[i]) ? 1 : 0);  
         unsigned int req_size2 = 1 + (mapc2[hash2].count(s[i]) ? 1 : 0);
-        /*the minimum number of distinct characters that should have been zeroed during
-        the preprocessing step to generate the hash (this is equal to 2 if there is a memory
-        string that is equal to the query string and 1 otherwise).*/
         if(set1.count(hash) && (mapc[hash].size() >= req_size) && mapi[hash].count(i)
             && set2.count(hash2) && (mapc2[hash2].size() >= req_size2) && mapi2[hash2].count(i)) {
             cout << "YES\n";
