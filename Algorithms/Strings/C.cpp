@@ -19,7 +19,7 @@ map<ll, set<int>> mapi;
 set<ll> set2;
 map<ll, set<char>> mapc2;
 map<ll, set<int>> mapi2;
-ll dp[maxk], dp2[maxk], poww[maxk], poww2[maxk];
+ll h, h2, poww[maxk], poww2[maxk];
 
 void constructPow() {
     ll num = 1;
@@ -31,29 +31,22 @@ void constructPow() {
     }
 }
 
-void constructDp(string s) {
-    for(int i = 0; i < slen; i++) {
-        dp[i] = dp2[i] = 0LL;
-    }
-    slen = s.size();
+void constructHashes(string s) {
     int len = s.size();
-    ll hash = s[0] - '0';
-    ll hash2 = s[0] - '0';
-    dp[0] = dp2[0] = hash;
+    h = h2 = s[0] - '0';
     for(int i = 1; i < len; i++) {
         ll c = s[i] - '0';
-        hash = (hash * x + c) % p;
-        hash2 = (hash2 * x2 + c) % p;
-        dp[i] = hash, dp2[i] = hash2;
+        h = (h * x + c) % p;
+        h2 = (h2 * x2 + c) % p;
     }
 }
 
 void insertHashes(string s) {
-    constructDp(s);
+    constructHashes(s);
     int len = s.size();
     for(int i = 0; i < len; i++) {
-        ll hash = (dp[len - 1] - ((s[i] - '0') * poww[len - i - 1]) % p + p) % p;
-        ll hash2 = (dp2[len - 1] - ((s[i] - '0') * poww2[len - i - 1]) % p + p) % p;
+        ll hash = (h - ((s[i] - '0') * poww[len - i - 1]) % p + p) % p;
+        ll hash2 = (h2 - ((s[i] - '0') * poww2[len - i - 1]) % p + p) % p;
         set1.insert(hash);
         mapc[hash].insert(s[i]);
         mapi[hash].insert(i);
@@ -65,10 +58,10 @@ void insertHashes(string s) {
 
 void checkValidity(string s) {
     int len = s.size();
-    constructDp(s);
+    constructHashes(s);
     for(int i = 0; i < len; i++) {
-        ll hash = (dp[len - 1] - ((s[i] - '0') * poww[len - i - 1]) % p + p) % p;
-        ll hash2 = (dp2[len - 1] - ((s[i] - '0') * poww2[len - i - 1]) % p + p) % p;
+        ll hash = (h - ((s[i] - '0') * poww[len - i - 1]) % p + p) % p;
+        ll hash2 = (h2 - ((s[i] - '0') * poww2[len - i - 1]) % p + p) % p;
         unsigned int req_size = 1 + (mapc[hash].count(s[i]) ? 1 : 0);
         unsigned int req_size2 = 1 + (mapc2[hash2].count(s[i]) ? 1 : 0);
         if(set1.count(hash) && (mapc[hash].size() >= req_size) && mapi[hash].count(i)
