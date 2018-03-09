@@ -13,13 +13,13 @@ int n, m;
 const ll p = 1000000007;
 const ll x = 42863052;
 const ll x2 = 47825835;
-set<ll> set1; //stores hashcodes
-map<ll, set<char>> mapc; //stores the characters that are zeroed to generate each hashcode
-map<ll, set<int>> mapi; //stores the indices of the characters that are zeroed to generate each hashcode
+set<ll> set1; //stores hashes from the memory strings
+map<ll, set<char>> mapc; //stores the characters that are zeroed to generate each hash
+map<ll, set<int>> mapi; //stores the indices of the characters that are zeroed to generate each hash
 set<ll> set2;
 map<ll, set<char>> mapc2;
 map<ll, set<int>> mapi2;
-ll h, h2, poww[maxk], poww2[maxk];
+ll h, h2, poww[maxk], poww2[maxk]; //store the hash of each string and the powers of x1 and x2 mod p
 
 void constructPow() {
     ll num = 1;
@@ -57,12 +57,12 @@ void insertHashes(string s) {
 }
 
 void checkValidity(string s) {
-    int len = s.size();
     constructHashes(s);
+    int len = s.size();
     for(int i = 0; i < len; i++) {
         ll hash = (h - ((s[i] - '0') * poww[len - i - 1]) % p + p) % p;
         ll hash2 = (h2 - ((s[i] - '0') * poww2[len - i - 1]) % p + p) % p;
-        unsigned int req_size = 1 + (mapc[hash].count(s[i]) ? 1 : 0); //the minimum number of distinct characters that should be zeroed to generate the hashcode (this is equal to 2 if there is a memory string that is equal to the query string and 1 otherwise). 
+        unsigned int req_size = 1 + (mapc[hash].count(s[i]) ? 1 : 0); //the minimum number of distinct characters that should be zeroed to generate the hash (this is equal to 2 if there is a memory string that is equal to the query string and 1 otherwise). 
         unsigned int req_size2 = 1 + (mapc2[hash2].count(s[i]) ? 1 : 0);
         if(set1.count(hash) && (mapc[hash].size() >= req_size) && mapi[hash].count(i)
             && set2.count(hash2) && (mapc2[hash2].size() >= req_size2) && mapi2[hash2].count(i)) {
