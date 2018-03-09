@@ -1,19 +1,24 @@
+/*
+    Codeforces Problem 514C: Watto and Mechanism (http://codeforces.com/problemset/problem/514/C)
+    Author: arvindr9
+*/
+
 #include <bits/stdc++.h>
 
 using namespace std;
 typedef long long ll;
-const int maxk = 1000000;
+const int maxk = 1000000; //max value of a string's length
 int n, m;
-int slen = 0;
+int slen = 0; //the length of the string that was previously processed: used to efficiently zero out the dp arrays
 const ll p = 1000000007;
+const ll x = 42863052;
+const ll x2 = 47825835;
 set<ll> set1;
-map<ll, set<char>> mapc;
+map<ll, set<char>> mapc; 
 map<ll, set<int>> mapi;
 set<ll> set2;
 map<ll, set<char>> mapc2;
 map<ll, set<int>> mapi2;
-const ll x = 42863052;
-const ll x2 = 47825835;
 ll dp[maxk], dp2[maxk], poww[maxk], poww2[maxk];
 
 void constructPow() {
