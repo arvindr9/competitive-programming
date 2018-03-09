@@ -1,7 +1,7 @@
 /*
     Codeforces Problem 514C: Watto and Mechanism (http://codeforces.com/problemset/problem/514/C)
     Author: arvindr9
-    Hash of a string A_0 A_1 ... A_k is (A_0 * x^k + A_1 * x^{k - 1} + ... + A_k * x^0) mod p
+    In this implementation, a hash of a string A_0 A_1 ... A_k is (A_0 * x^k + A_1 * x^{k - 1} + ... + A_k * x^0) mod p
 */
 
 #include <bits/stdc++.h>
