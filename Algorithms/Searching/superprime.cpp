@@ -15,23 +15,6 @@ Solution: O(n sqrt(n)) -- but not really since there aren't that many superprime
 using namespace std;
 
 typedef long long ll;
-const ll p1 = 1000000007;
-const ll p2 = 1000000009;
-const ll p3 = 15485867;
-
-ll modpow(ll a, ll p, ll prime) {
-    ll res = 1;
-    while (p) {
-        if(p & 1) {
-            res = res * 1LL * a;
-            if(res >= prime) res %= prime;
-        }
-        a = a * 1LL * a;
-        if(a >= prime) a %= prime;
-        p /= 2;
-    }
-    return res;
-}
 
 bool isPrime(ll n) {
     if(n == 1) return false;
@@ -39,9 +22,6 @@ bool isPrime(ll n) {
         if(n % i == 0) return false;
     }
     return true;
-    // if(n == p1 || n == p2 || n == p3) return true;
-    // if(n % p1 == 0 || n % p2 == 0 || n % p3 == 0 || n == 1) return false;
-    // return modpow(n, p1 - 1, p1) == 1 && modpow(n, p2 - 1, p2) == 1 && modpow(n, p3 - 1, p3) == 1;
 }
 
 void solve(ll num, int n) {
@@ -59,7 +39,5 @@ void solve(ll num, int n) {
 }
 
 int main() {
-    //freopen("superprime.out", "w", stdout);
-    
     solve(0, 0);
 }
