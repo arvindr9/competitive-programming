@@ -10,7 +10,7 @@ struct cht{
             b = _b;
         }
         bool operator <(const line &other) const{
-            return 1.0 * m < 1.0 * other.m / other.b;
+            return 1.0 * m > 1.0 * other.m;
         }
     };
     vector<line> lines;
