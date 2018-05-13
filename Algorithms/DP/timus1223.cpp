@@ -1,3 +1,5 @@
+//An interesting problem I found. This is NOT my own solution. See here: https://github.com/Otrebus/timus/blob/master/1223.cpp
+
 /* 1223. Chernobyl Eagle on a Roof - http://acm.timus.ru/problem.aspx?num=1223
  *
  * Strategy:
