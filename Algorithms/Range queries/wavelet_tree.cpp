@@ -1,3 +1,5 @@
+//This was taken from somewhere (can't quite remember). I give credit to them.
+
 #include <bits/stdc++.h>
 using namespace std;
 #define gc getchar_unlocked
