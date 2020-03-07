@@ -18,6 +18,8 @@ using namespace std;
     After finding the desired edges of weight 1, add arbitrary edges of weight 1 until
     the total number of edges is equal to K (using dsu). Then, add edges of weight 0
     to the dsu until the spanning tree is created.
+    
+    FYI: there is an implementation of DSU with undo operations here (source: xenoframium): https://codeforces.com/contest/892/submission/72607490
 
 */
 
