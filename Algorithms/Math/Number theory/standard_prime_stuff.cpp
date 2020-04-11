@@ -2,7 +2,7 @@
 
 using namespace std;
 
-//untested
+//untested, I plan to update when tested
 
 typedef long long ll;
 
@@ -12,6 +12,10 @@ ll fac[maxn];
 
 ll add(ll a, ll b) {
   return (((a + b) % mod) + mod ) % mod;
+}
+
+ll prod(ll a, ll b) {
+  return (((a * b) % mod) + mod) % mod;
 }
 
 ll modpow(ll a, ll pw) {
@@ -38,4 +42,27 @@ ll binom(ll a, ll b) {
   return prod(num, inv(den));
 }
 
-map<ll, int> pfac(ll a, ll b)
+map<ll, int> pfac(ll a) {
+  map<ll, int> res;
+  for (int i = 1; i * i <= a; i++) {
+    while (a % i == 0) {
+      res[i]++;
+      a /= i;
+  }
+  if (a > 1) {
+    res[a]++;
+  }
+  return res;
+}
+
+map<ll, int> gcd(map<ll, int> p1, map<ll, int> p2) {
+  map<ll, int> res;
+  for (pair<int, int> p: p1) {
+    res[p.first] = min(p.second, p2[p.first]);
+  }
+  for (pair<int, int> p: p2) {
+    res[p.first] = min(p.second, p1[p.first]);
+  }
+  return res;
+}
+
