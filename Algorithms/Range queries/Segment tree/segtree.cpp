@@ -31,7 +31,7 @@ void sum(int v, int tl, int tr, int l, int r) {
         return t[v];
     }
     int tm = (tl + tr) / 2;
-    return sum(2 * v, tl, tm, l, min(tm, r)) + sum(2 * b + 1, tm + 1, tr, max(tm + 1, l), tr);
+    return sum(2 * v, tl, tm, l, min(tm, r)) + sum(2 * v + 1, tm + 1, tr, max(tm + 1, l), tr);
 }
 
 void update(int v, int tl, int tr, int index, int val) {
