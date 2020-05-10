@@ -38,7 +38,7 @@ ll process_fac() {
 
 ll binom(ll a, ll b) {
   ll num = fac[a];
-  ll den = prod(fac[a - b], fac[b])
+  ll den = prod(fac[a - b], fac[b]);
   return prod(num, inv(den));
 }
 
