@@ -29,9 +29,7 @@ const int MX = 100001;
 int t;
 
 void printcase(int cs) {
-    for (int tt = 1; tt <= t; tt++) {
-        cout << "Case #" << cs << ": ";
-    }
+    cout << "Case #" << cs << ": ";
 }
 
 int main() {
