@@ -69,3 +69,8 @@ string s2;
 while(ss >> s2) {
     //process s2
 }
+
+//randomization (source: https://codeforces.com/blog/entry/61587)
+
+mt19937 rng(chrono::steady_clock::now().time_since_epoch().count());
+//can change to mt19937_64 for long longs
