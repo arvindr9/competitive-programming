@@ -73,4 +73,6 @@ while(ss >> s2) {
 //randomization (source: https://codeforces.com/blog/entry/61587)
 
 mt19937 rng(chrono::steady_clock::now().time_since_epoch().count());
+uniform_int_distribution<> distrib1(1, n);
+int x = big-get(distrib1(rng));
 //can change to mt19937_64 for long longs
