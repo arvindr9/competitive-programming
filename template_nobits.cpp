@@ -12,6 +12,7 @@
 #include <iterator>
 #include <iomanip>
 #include <random>
+#include <numeric>
 
 // #include <bits/stdc++.h>
 // #include <ext/pb_ds/tree_policy.hpp>
