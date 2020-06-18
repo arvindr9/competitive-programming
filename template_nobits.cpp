@@ -49,3 +49,9 @@ int main() {
     cin.tie(0);
 
 }
+
+/*
+    Potential bugs:
+    - Not resetting the arrays properly
+    - Out of bounds
+*/
