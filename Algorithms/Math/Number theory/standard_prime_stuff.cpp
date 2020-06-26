@@ -10,23 +10,27 @@ const ll mod = 1e9 + 7;
 const int maxp = 200;
 ll fac[maxn];
 
+ll reduce(ll a) {
+    return ((a % mod) + mod) % mod;
+}
+
 ll add(ll a, ll b) {
-  return (((a + b) % mod) + mod ) % mod;
+    return reduce(a + b);
 }
 
 ll prod(ll a, ll b) {
-  return (((a * b) % mod) + mod) % mod;
+    return reduce(a * b);
 }
 
 ll modpow(ll a, ll pw) {
-  if (pw == 0) return 1;
-  if (pw % 2 == 1) return prod(a, modpow(a, pw - 1));
-  ll res = modpow(a, pw / 2);
-  return prod(res, res);
+    if (pw == 0) return 1;
+    if (pw % 2 == 1) return prod(a, modpow(a, pw - 1));
+    ll res = modpow(a, pw / 2);
+    return prod(res, res);
 }
 
 ll inv(ll a) {
-  return modpow(a, mod - 2);
+    return modpow(a, mod - 2);
 }
 
 ll process_fac() {
