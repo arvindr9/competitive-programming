@@ -1,3 +1,5 @@
+//Taken from EbTech's CF post. See here: https://codeforces.com/blog/entry/67391
+
 #[allow(unused_imports)]
 use std::cmp::{min,max};
 use std::io::{BufWriter, stdin, stdout, Write};
