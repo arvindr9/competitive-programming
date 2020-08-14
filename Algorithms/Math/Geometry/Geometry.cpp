@@ -11,7 +11,7 @@ struct PT {
     PT(double x, double y, double z = 0) : x(x), y(y), z(z) {}
     PT(const PT &p) : x(p.x), y(p.y) {}
     bool operator == (PT other) const {
-     return (fabs(x - other.x) < EPS && (fabs(y - other.y) < EPS)); }
+     return (fabs(x - other.x) < EPS && (fabs(y - other.y) < EPS) && fabs(z - other.z) < EPS); }
     PT operator + (const PT &p)  const { return PT(x + p.x, y + p.y, z + p.z); }
     PT operator - (const PT &p)  const { return PT(x - p.x, y - p.y, z - p.z); }
     PT operator * (double c)     const { return PT(x*c, y*c, z*c); }
