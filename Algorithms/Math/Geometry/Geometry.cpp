@@ -52,7 +52,7 @@ Plane point_to_plane(PT a, PT b, PT c) {
     PT vec1 = a - c;
     PT vec2 = b - c;
     PT cross_ = cross3D(vec1, vec2);
-    double d = dot(cross_, vec1);
+    double d = dot(cross_, vec1); //this line seems wrong? (maybe should be dot(cross_, a))
     return Plane(cross_.x, cross_.y, cross_.z, d);
 }
 
