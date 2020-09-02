@@ -37,7 +37,7 @@ struct RMQ {
     }
  
     int rmq_index(int a, int b) const {
-        assert(a < b);
+//         assert(a < b);
         int level = largest_bit(b - a);
         return max_index(range_high[level][a], range_high[level][b - (1 << level)]);
     }
