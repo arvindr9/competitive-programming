@@ -1,34 +1,48 @@
-/**
- * Author: Johan Sannemo
- * Date: 2015-02-06
- * License: CC0
- * Source: Folklore
- * Status: Tested at Petrozavodsk
- * Description: Range Minimum Queries on an array. Returns
- * min(V[a], V[a + 1], ... V[b - 1]) in constant time.
- * Usage:
- *  RMQ rmq(values);
- *  rmq.query(inclusive, exclusive);
- * Time: $O(|V| \log |V| + Q)$
- * Status: stress-tested
- */
-#pragma once
+// From Neal Wu's submission: https://codeforces.com/contest/1107/submission/49036431
 
-template<class T>
+template<typename T>
 struct RMQ {
-	vector<vector<T>> jmp;
-	RMQ(const vector<T>& V) : jmp(1, V) {
-		for (int pw = 1, k = 1; pw * 2 <= sz(V); pw *= 2, ++k) {
-			jmp.emplace_back(sz(V) - pw * 2 + 1);
-			rep(j,0,sz(jmp[k]))
-				jmp[k][j] = min(jmp[k - 1][j], jmp[k - 1][j + pw]);
-		}
-	}
-	T query(int a, int b) {
-		assert(a < b); // or return inf if a == b
-		int dep = 31 - __builtin_clz(b - a);
-		return min(jmp[dep][a], jmp[dep][b - (1 << dep)]);
-	}
+    int n = 0, levels = 0;
+    vector<T> values;
+    vector<vector<int>> range_high;
+ 
+    RMQ(const vector<T> &_values = {}) {
+        if (!_values.empty())
+            build(_values);
+    }
+ 
+    static int largest_bit(int x) {
+        return 31 - __builtin_clz(x);
+    }
+ 
+    int max_index(int a, int b) const {
+        return values[a] > values[b] ? a : b;
+    }
+ 
+    void build(const vector<T> &_values) {
+        values = _values;
+        n = values.size();
+        levels = largest_bit(n) + 1;
+        range_high.resize(levels);
+ 
+        for (int k = 0; k < levels; k++)
+            range_high[k].resize(n - (1 << k) + 1);
+ 
+        for (int i = 0; i < n; i++)
+            range_high[0][i] = i;
+ 
+        for (int k = 1; k < levels; k++)
+            for (int i = 0; i <= n - (1 << k); i++)
+                range_high[k][i] = max_index(range_high[k - 1][i], range_high[k - 1][i + (1 << (k - 1))]);
+    }
+ 
+    int rmq_index(int a, int b) const {
+        assert(a < b);
+        int level = largest_bit(b - a);
+        return max_index(range_high[level][a], range_high[level][b - (1 << level)]);
+    }
+ 
+    T rmq_value(int a, int b) const {
+        return values[rmq_index(a, b)];
+    }
 };
-
-#TODO: add range max query and add rmq for 1-indexing
