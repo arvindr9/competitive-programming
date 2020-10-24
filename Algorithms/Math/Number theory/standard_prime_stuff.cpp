@@ -3,40 +3,57 @@
 using namespace std;
 
 //untested, I plan to update when tested
+typedef int int2;
+#define int long long
 
 typedef long long ll;
 
 const ll mod = 1e9 + 7;
-const int maxp = 200;
-ll fac[maxn];
+const int maxp = 1e6 + 5;
 
-ll reduce(ll a) {
-    return ((a % mod) + mod) % mod;
+inline int reduce(int a) {
+    return (a %= mod) < 0 ? a + mod : a;
 }
 
-ll add(ll a, ll b) {
+inline int add(int a, int b) {
     return reduce(a + b);
 }
 
-ll prod(ll a, ll b) {
+inline int prod(int a, int b) {
     return reduce(a * b);
 }
 
-ll modpow(ll a, ll pw) {
+inline int modpow(int a, int pw) {
     if (pw == 0) return 1;
-    if (pw % 2 == 1) return prod(a, modpow(a, pw - 1));
-    ll res = modpow(a, pw / 2);
-    return prod(res, res);
+    if (pw % 2 == 0) {
+        int res = modpow(a, pw / 2);
+        return prod(res, res);
+    }
+    return prod(a, modpow(a, pw - 1));
 }
 
-ll inv(ll a) {
+inline int inv(int a) {
     return modpow(a, mod - 2);
+}
+int fact[maxp];
+
+inline int binom(int a, int b) {
+    if (b > a) return 0;
+    int num = fact[a];
+    int den = prod(fact[b], fact[a - b]);
+    return prod(num, inv(den));
+}
+
+inline int cayley(int num, int s) {
+    if (num == s) return 1;
+    int a1 = modpow(num, num - s - 1);
+    return prod(s, a1);
 }
 
 ll process_fac() {
-  fac[0] = 1;
+  fact[0] = 1;
   for (int i = 1; i < maxp; i++) {
-    fac[i] = prod(fac[i - 1], i);
+    fact[i] = prod(fact[i - 1], i);
   }
 }
 
@@ -55,17 +72,6 @@ map<ll, int> pfac(ll a) {
   }
   if (a > 1) {
     res[a]++;
-  }
-  return res;
-}
-
-map<ll, int> gcd(map<ll, int> p1, map<ll, int> p2) {
-  map<ll, int> res;
-  for (pair<int, int> p: p1) {
-    res[p.first] = min(p.second, p2[p.first]);
-  }
-  for (pair<int, int> p: p2) {
-    res[p.first] = min(p.second, p1[p.first]);
   }
   return res;
 }
