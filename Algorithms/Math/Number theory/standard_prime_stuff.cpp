@@ -65,7 +65,7 @@ ll binom(ll a, ll b) {
 
 map<ll, int> pfac(ll a) {
   map<ll, int> res;
-  for (int i = 1; i * i <= a; i++) {
+  for (int i = 2; i * i <= a; i++) {
     while (a % i == 0) {
       res[i]++;
       a /= i;

@@ -1,43 +1,52 @@
-#include <bits/stdc++.h>
+// used in https://codeforces.com/contest/1422/submission/97913858
 
-using namespace std;
-
-//heavily based on https://cp-algorithms.com/data_structures/segment_tree.html
-
-struct Vertex {
-    Vertex *l, *r;
-    int sum;
-
-    Vertex(int val) : l(nullptr), r(nullptr), sum(val) {}
-    Vertex(Vertex *l, Vertex *r) : l(l), r(r), sum(0) {
-        if (l) sum += l->sum;
-        if (r) sum += r->sum;
+struct big_node {
+    big_node *l, *r;
+    int val;
+    big_node(): l(nullptr), r(nullptr), val(val) {}
+    big_node(int val) : l(nullptr), r(nullptr), val(val) {}
+    big_node(big_node *l, big_node *r): l(l), r(r), val(1) {
+        if (l) val = prod(val, l-> val);
+        if (r) val = prod(val, r-> val);
     }
+
 };
 
-Vertex* build(int a[], int tl, int tr) {
-    if (tl == tr)
-        return new Vertex(a[tl]);
+big_node* build(int tl, int tr, vector<int> &a) {
+    if (tl == tr) {
+        return new big_node(a[tl]);
+    }
     int tm = (tl + tr) / 2;
-    return new Vertex(build(a, tl, tm), build(a, tm+1, tr));
+    return new big_node(build(tl, tm, a), build(tm + 1, tr, a));
 }
 
-int get_sum(Vertex* v, int tl, int tr, int l, int r) {
-    if (l > r)
-        return 0;
-    if (l == tl && tr == r)
-        return v->sum;
-    int tm = (tl + tr) / 2;
-    return get_sum(v->l, tl, tm, l, min(r, tm))
-         + get_sum(v->r, tm+1, tr, max(l, tm+1), r);
+big_node* upd(big_node* v, int tl, int tr, int pos, int val) {
+    if (tl == tr) {
+        return new big_node(val);
+    } else {
+        int tm = (tl + tr) / 2;
+        if (pos <= tm) {
+            return new big_node(upd(v->l, tl, tm, pos, val), v->r);
+        } else {
+            return new big_node(v->l, upd(v->r, tm + 1, tr, pos, val));
+        }
+    }
 }
 
-Vertex* update(Vertex* v, int tl, int tr, int pos, int new_val) {
-    if (tl == tr)
-        return new Vertex(new_val);
+int query_prod(big_node* v, int tl, int tr, int l, int r) {
+    if (l > r) return 1;
+    if (l == tl and r == tr) return v->val;
     int tm = (tl + tr) / 2;
-    if (pos <= tm)
-        return new Vertex(update(v->l, tl, tm, pos, new_val), v->r);
-    else
-        return new Vertex(v->l, update(v->r, tm+1, tr, pos, new_val));
+    return prod(query_prod(v->l, tl, tm, l, min(tm, r)), query_prod(v->r, tm + 1, tr, max(l, tm + 1), r));
+}
+
+big_node* upd(big_node* v, int pos, int val) {
+    return upd(v, 1, n, pos, val);
+}
+
+int query_prod(big_node* v, int l, int r) {
+    return query_prod(v, 1, n, l, r);
+}
+big_node* build(vector<int> &a) {
+    return build(1, n, a);
 }
