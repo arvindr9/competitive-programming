@@ -63,6 +63,18 @@ ll binom(ll a, ll b) {
   return prod(num, inv(den));
 }
 
+vector<int> get_divisors(int a) {
+  vector<int> ans = {};
+  for (int i = 1; i * i <= a; i++) {
+    if (i * i != a) {
+      ans.pb(a / i);
+    }
+    ans.pb(i);
+  }
+  sort(ans.begin(), ans.end());
+  return ans;
+}
+
 map<ll, int> pfac(ll a) {
   map<ll, int> res;
   for (int i = 2; i * i <= a; i++) {
