@@ -1,47 +1,85 @@
+// Untested
+
 #include <bits/stdc++.h>
-
-// Source: Jiahui Lu
-
 using namespace std;
-int cnt = 0, num = 0;
-vector<int> e[5010];
-bool instack[5010], source[5010];
-stack<int> s;
-int dfn[5010], low[5010], belong[5010];
 
-void tarjan(int x) {
-	instack[x] = true;
-	dfn[x] = low[x] = ++cnt;
-	s.push(x);
-	for (int y : e[x]) {
-		if (!dfn[y]) {
-			tarjan(y);
-			low[x] = min(low[x], low[y]);
-		}
-		else if (instack[y]) low[x] = min(low[x], dfn[y]); // seems equal to low[x] = min(low[x], low[y])
-	}
-	if (low[x] == dfn[x]) {
-		source[++num] = true;
-		while (1) {
-			int p = s.top();
-			s.pop();
-			instack[p] = false;
-			belong[p] = num;
-			if (p == x) break;
-		}
-	}
+typedef int int2;
+#define int long long
+
+#define pi pair<int, int>
+#define mp make_pair
+#define pb push_back
+#define eb emplace_back
+#define f first
+#define s second;
+#define inf 1e18
+
+const int maxn = 1e5 + 5;
+
+vector<int> adj[maxn], compadj[maxn];
+int low[maxn], pre[maxn], comp[maxn];
+int timer = 0;
+int comptimer = 0;
+vector<int> stk;
+
+int n, m;
+
+void dfs(int u, int p) {
+    pre[u] = low[u] = ++timer;
+    stk.push(u);
+    for (int v: adj[u]) {
+        if (v != p) {
+            if (pre[v] < pre[u]) { // back edge or tree edge
+                if (!pre[v]) { // tree edge
+                    dfs(v, u);
+                    low[u] = min(low[u], low[v]);
+                } else { // back edge
+                    low[u] = min(low[u], pre[v]);
+                }
+            }
+        }
+    }
+    if (pre[u] == low[u]) {
+        // process component
+        comptimer++;
+        while (stk.back() != u) {
+            int v = stk.back();
+            comp[v] = comptimer;
+            stk.pop_back();
+        }
+        comp[u] = comptimer;
+        stk.pop_back();
+    }
+    pre[u] = inf;
 }
-int main() {
-	ios::sync_with_stdio(false);
-	int n,m,s; cin >> n >> m >> s;
-	for (int i = 0; i < m; i++) {
-		int x,y; cin >> x >> y;
-		e[x].push_back(y);
-	}
-	for (int i = 1; i <= n; i++) if (!dfn[i]) tarjan(i);
-	for (int i = 1; i <= n; i++) 
-		for (int y : e[i]) if (belong[y] != belong[i]) source[belong[y]] = false;
-	int ans = 0;
-	for (int i = 1; i <= num; i++) if (source[i]) ans++;
-	cout << ans - (source[belong[s]]) << "\n";
+
+void form_compadj() {
+    for (int u = 1; u <= n; i++) {
+        for (int v: adj[u]) {
+            if (comp[u] != comp[v]) {
+                compadj[comp[u]].pb(comp[v]);
+            }
+        }
+    }
+    for (int i = 1; i <= comptimer; i++) {
+        vector<int> & edges = compadj[i];
+        sort(edges.begin(), edges.end());
+        compadj[i].erase(unique(edges.begin(), edges.end()), edges.end());
+    }
+}
+
+int2 main() {
+    ios::sync_with_stdio(0);
+    cin.tie(0);
+    cin >> n >> m;
+    for (int i = 1; i <= m; i++) {
+        int u, v;
+        cin >> u >> v;
+        adj[u].pb(v);
+    }
+
+    for (int u = 1; u <= n; u++) {
+        if (!pre[u]) dfs(u, u);
+    }
+    form_compadj();
 }
