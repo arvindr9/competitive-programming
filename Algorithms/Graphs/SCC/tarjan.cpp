@@ -1,5 +1,3 @@
-// Untested
-
 #include <bits/stdc++.h>
 using namespace std;
 
@@ -26,7 +24,7 @@ int n, m;
 
 void dfs(int u, int p) {
     pre[u] = low[u] = ++timer;
-    stk.push(u);
+    stk.pb(u);
     for (int v: adj[u]) {
         if (v != p) {
             if (pre[v] < pre[u]) { // back edge or tree edge
@@ -54,7 +52,7 @@ void dfs(int u, int p) {
 }
 
 void form_compadj() {
-    for (int u = 1; u <= n; i++) {
+    for (int u = 1; u <= n; u++) {
         for (int v: adj[u]) {
             if (comp[u] != comp[v]) {
                 compadj[comp[u]].pb(comp[v]);
@@ -82,4 +80,5 @@ int2 main() {
         if (!pre[u]) dfs(u, u);
     }
     form_compadj();
+    
 }
