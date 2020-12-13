@@ -1,4 +1,4 @@
-// TODO: fix and finish this
+// Contest 876, problem E
 
 #include <bits/stdc++.h>
 using namespace std;
@@ -28,14 +28,12 @@ void dfs(int u, int p) {
     pre[u] = low[u] = ++timer;
     stk.pb(u);
     for (int v: adj[u]) {
-        if (v != p) {
-            if (pre[v] < pre[u]) { // back edge or tree edge
-                if (!pre[v]) { // tree edge
-                    dfs(v, u);
-                    low[u] = min(low[u], low[v]);
-                } else { // back edge
-                    low[u] = min(low[u], pre[v]);
-                }
+        if (pre[v] < pre[u]) { // back edge or tree edge
+            if (!pre[v]) { // tree edge
+                dfs(v, u);
+                low[u] = min(low[u], low[v]);
+            } else { // back edge
+                low[u] = min(low[u], pre[v]);
             }
         }
     }
@@ -72,46 +70,62 @@ vector<int> words[maxn];
 
 bool possible = true;
 
-void dfs(int level, int l, int r) {
+// int limit = 1000;
+bool print = false;
+// int counter = 0;
+// int rangesum = 0;
+// int rangelimit = 50000;
+
+void dfs2(int level, int l, int r) {
     // make sure empties are a (possibly nonempty) prefix of [l...r]
-    vector<int> empties;
-    for (int i = l; i <= r; i++) {
-        if ((int)words[i].size() >= level) {
-            empties.pb(i);
-            if (empties[0] != l) {
-                possible = false;
-                return;
-            }
-            int num_empties = empties.size();
-            if (num_empties >= 2 and empties[num_empties - 2] != empties.back() - 1) {
-                possible = false;
-                return;
-            }
+    if (!possible) return;
+
+    for (int i = l + 1; i <= r; i++) {
+        // something + empty = bad
+        int sz0 = (int)words[i - 1].size();
+        int sz1 = (int)words[i].size();
+        if (sz0 > level and sz1 <= level) {
+            possible = false;
+            return;
         }
     }
-    vector<int> pos(m + 1);
+
+    vector<int> nonempties;
+    map<int, vector<int>> pos;
     // make sure there are no gaps
+    
     for (int i = r; i >= l; i--) {
-        if ((int)words.size() >= level) break;
+        if ((int)words[i].size() <= level) break;
         int cur_letter = words[i][level];
         if (!pos[cur_letter].empty() and pos[cur_letter].back() != i + 1) {
             possible = false;
             return;
         }
-        pos[cur_letter].pb(j);
-        for (int i = 1; i < cur_letter; i++) {
-            if (!pos[i].empty()) {
-                // !curletter and i must be true (i.e. adding a constraint)
-                adj[curletter].pb(m + i);
-                adj[m + i].pb(curletter + i);
+        pos[cur_letter].pb(i);
+        // add satisfiability constraints
+        if (i < r) {
+            int cl = words[i][level];
+            int cr = words[i + 1][level];
+            if (cl < cr) {
+                // ~cl v cr
+                adj[cl + m].pb(cr + m);
+                adj[cr].pb(cl);
+                // cout << "cl: " << cl << ", cr: " << cr << "\n";
+            } else if (cl > cr) {
+                // (~cl v ~cl) ^ (cr v cr)
+                adj[cl + m].pb(cl); // forces uppercase
+                adj[cr].pb(cr + m); // forces lowercase
+                // cout << cl << " uppercase, " << cr << " lowercase\n";
             }
         }
-    }
-    for (int i = 1; i <= m; i++) {
-        if (!pos[i].empty()) {
-            dfs(level + 1, pos[i][0], pos[i].back());
+        if ((int)pos[cur_letter].size() == 2) {
+            nonempties.pb(cur_letter);
         }
-    } 
+    }
+
+    for (int elt: nonempties) {
+        dfs2(level + 1, pos[elt].back(), pos[elt][0]);
+    }
 }
 
 void clean_adj() {
@@ -137,7 +151,14 @@ int2 main() {
         }
     }
 
+    if (n == 20000 and m == 100000) {
+        print = true;
+    }
+
+
     dfs2(0, 1, n);
+
+
     if (!possible) {
         cout << "No\n";
         return 0;
@@ -145,10 +166,16 @@ int2 main() {
 
     clean_adj();
 
+
     for (int u = 1; u <= 2 * m; u++) {
         if (!pre[u]) dfs(u, u);
     }
+    // for (int i = 1; i <= 2 * m; i++) {
+    //     cout << "i: " << i << ", comp: " << comp[i] << "\n";
+    // }
     form_compadj();
+
+    // cout << comp[2] << " "<< comp[2 + m] << "\n";
 
     for (int i = 1; i <= m; i++) {
         if (comp[i] == comp[m + i]) {
@@ -159,6 +186,19 @@ int2 main() {
         cout << "No\n";
         return 0;
     }
+
+    cout << "Yes\n";
+    vector<int> ans;
+    for (int i = 1; i <= m; i++) {
+        if (comp[i] < comp[i + m]) {
+            ans.pb(i);
+        }
+    }
+    cout << ans.size() << "\n";
+    for (int elt: ans) {
+        cout << elt << " ";
+    }
+    cout << "\n";
 
     
 }

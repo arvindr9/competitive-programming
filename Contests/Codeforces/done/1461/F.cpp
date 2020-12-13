@@ -54,6 +54,7 @@ vector<char> solve(int l, int r) {
         return num / den;
     };
 
+    // set everything to * if product is >= 2 * nn. See my comment here for explanation: https://codeforces.com/blog/entry/85491?#comment-732087
     if (all_times) {
         for (int i = l; i < r; i++) {
             ops.pb('*');

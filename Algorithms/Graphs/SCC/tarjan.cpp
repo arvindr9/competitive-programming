@@ -1,3 +1,5 @@
+// SCCs are returned in reverse topological order
+
 #include <bits/stdc++.h>
 using namespace std;
 
@@ -12,7 +14,7 @@ typedef int int2;
 #define s second;
 #define inf 1e18
 
-const int maxn = 1e5 + 5;
+const int maxn = 2e5 + 5;
 
 vector<int> adj[maxn], compadj[maxn];
 int low[maxn], pre[maxn], comp[maxn];
@@ -26,14 +28,12 @@ void dfs(int u, int p) {
     pre[u] = low[u] = ++timer;
     stk.pb(u);
     for (int v: adj[u]) {
-        if (v != p) {
-            if (pre[v] < pre[u]) { // back edge or tree edge
-                if (!pre[v]) { // tree edge
-                    dfs(v, u);
-                    low[u] = min(low[u], low[v]);
-                } else { // back edge
-                    low[u] = min(low[u], pre[v]);
-                }
+        if (pre[v] < pre[u]) { // back edge or tree edge
+            if (!pre[v]) { // tree edge
+                dfs(v, u);
+                low[u] = min(low[u], low[v]);
+            } else { // back edge
+                low[u] = min(low[u], pre[v]);
             }
         }
     }
@@ -52,7 +52,7 @@ void dfs(int u, int p) {
 }
 
 void form_compadj() {
-    for (int u = 1; u <= n; u++) {
+    for (int u = 1; u <= 2 * m; u++) {
         for (int v: adj[u]) {
             if (comp[u] != comp[v]) {
                 compadj[comp[u]].pb(comp[v]);
@@ -63,6 +63,14 @@ void form_compadj() {
         vector<int> & edges = compadj[i];
         sort(edges.begin(), edges.end());
         compadj[i].erase(unique(edges.begin(), edges.end()), edges.end());
+    }
+}
+
+void clean_adj() {
+    for (int i = 1; i <= 2 * n; i++) {
+        vector<int> &edges = adj[i];
+        sort(edges.begin(), edges.end());
+        edges.erase(unique(edges.begin(), edges.end()), edges.end());
     }
 }
 
