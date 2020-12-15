@@ -154,7 +154,7 @@ int2 main() {
 		segs[i].s = Point<int>(x2, y2);
 		par[i] = i;
 		sz[i] = 1;
-		rep[i] = segs[i];
+		// rep[i] = segs[i];
 	}
 
 	// merging parallel edges that intersect: apparently not necessary?
