@@ -13,6 +13,9 @@ typedef int int2;
 #define inf 1e18
 #define all(x) x.begin(), x.end()
 
+
+// Template source: KACTL
+
 template <class T> int sgn(T x) { return (x > 0) - (x < 0); }
 template<class T>
 struct Point {
@@ -53,7 +56,6 @@ template<class P> bool segInter(P a, P b, P c, P d) {
 	// Checks if intersection is single non-endpoint point.
 	if (sgn(oa) * sgn(ob) < 0 && sgn(oc) * sgn(od) < 0)
 		return true;
-	set<P> s;
 	return (onSegment(c, d, a) or onSegment(c, d, b) or onSegment(a, b, c) or onSegment(a, b, d));
 }
 
@@ -65,38 +67,38 @@ typedef long double T;
 
 typedef pair<Point<int>, Point<int>> line;
 
-bool parallel(line &l1, line &l2) {
-	// dy1 / dx1 = dy2 / dx2, i.e. dy1 * dx2 = dy2 * dx1
-	int dy1 = l1.s.y - l1.f.y;
-	int dx1 = l1.s.x - l1.f.x;
-	int dy2 = l2.s.y - l2.f.y;
-	int dx2 = l2.s.x - l2.f.x;
-	return dy1 * dx2 == dy2 * dx1;
-}
+// bool parallel(line &l1, line &l2) {
+// 	// dy1 / dx1 = dy2 / dx2, i.e. dy1 * dx2 = dy2 * dx1
+// 	int dy1 = l1.s.y - l1.f.y;
+// 	int dx1 = l1.s.x - l1.f.x;
+// 	int dy2 = l2.s.y - l2.f.y;
+// 	int dx2 = l2.s.x - l2.f.x;
+// 	return dy1 * dx2 == dy2 * dx1;
+// }
 
-bool parallel_intersect(line l1, line l2) {
-	if (!parallel(l1, l2)) return false;
-	return segInter(l1.f, l1.s, l2.f, l2.s);
-}
+// bool parallel_intersect(line l1, line l2) {
+// 	if (!parallel(l1, l2)) return false;
+// 	return segInter(l1.f, l1.s, l2.f, l2.s);
+// }
 
-line merge(line&l1, line&l2) {
-	line cand;
-	double max_dist = 0;
-	auto chkmax = [&](Point<int> &p1, Point<int> &p2) {
-		if ((double)(p1 - p2).dist() > max_dist) {
-			max_dist = (double)(p1 - p2).dist();
-			cand = {p1, p2};
-		}
-		return;
-	};
-	chkmax(l1.f, l2.s);
-	chkmax(l1.f, l2.f);
-	chkmax(l1.s, l2.s);
-	chkmax(l1.s, l2.f);
-	chkmax(l1.f, l1.s);
-	chkmax(l2.f, l2.s);
-	return cand;
-}
+// line merge(line&l1, line&l2) {
+// 	line cand;
+// 	double max_dist = 0;
+// 	auto chkmax = [&](Point<int> &p1, Point<int> &p2) {
+// 		if ((double)(p1 - p2).dist() > max_dist) {
+// 			max_dist = (double)(p1 - p2).dist();
+// 			cand = {p1, p2};
+// 		}
+// 		return;
+// 	};
+// 	chkmax(l1.f, l2.s);
+// 	chkmax(l1.f, l2.f);
+// 	chkmax(l1.s, l2.s);
+// 	chkmax(l1.s, l2.f);
+// 	chkmax(l1.f, l1.s);
+// 	chkmax(l2.f, l2.s);
+// 	return cand;
+// }
 
 const int maxn = 1005;
 
@@ -117,15 +119,15 @@ void reset() {
 	}
 }
 
-void unite(int u, int v) {
-	u = find(u), v = find(v);
-	if (sz[u] < sz[v]) {
-		swap(u, v);
-	}
-	par[v] = u;
-	sz[u] += sz[v];
-	rep[u] = merge(rep[u], rep[v]);
-}
+// void unite(int u, int v) {
+// 	u = find(u), v = find(v);
+// 	if (sz[u] < sz[v]) {
+// 		swap(u, v);
+// 	}
+// 	par[v] = u;
+// 	sz[u] += sz[v];
+// 	rep[u] = merge(rep[u], rep[v]);
+// }
 
 void unite2(int u, int v) {
 	u = find(u), v = find(v);

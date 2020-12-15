@@ -56,6 +56,92 @@ void print_tree(int l, int r, int n) {
     cout << "\n";
 } 
 
+
+// used in https://codeforces.com/contest/1422/submission/97913858
+struct segtree {
+    vector<small_node> t;
+    int n;
+ 
+    segtree(vector<small_node> &a) {
+        n = (int)a.size() - 1;
+        t.resize(4 * n + 5);
+        build(1, 1, n, a);
+    }
+ 
+    void build(int v, int tl, int tr, vector<small_node> &a) {
+        if (tl == tr) {
+            t[v] = a[tl];
+        } else {
+            int tm = (tl + tr) / 2;
+            build(2 * v, tl, tm, a);
+            build(2 * v + 1, tm + 1, tr, a);
+            t[v] = t[2 * v] + t[2 * v + 1];
+        }
+    }
+ 
+    small_node query_lcm(int v, int tl, int tr, int l, int r) {
+        small_node res;
+        if (l > r) return res;
+        if (l == tl and r == tr) return t[v];
+        int tm = (tl + tr) / 2;
+        return query_lcm(2 * v, tl, tm, l, min(tm, r)) + query_lcm(2 * v + 1, tm + 1, tr, max(l, tm + 1), r);
+    }  
+ 
+    void build(vector<small_node> &a) {
+        build(1, 1, n, a);
+    }
+ 
+    int query_lcm(int l, int r) {
+        small_node lc = query_lcm(1, 1, n, l, r);
+        int res = 1;
+        for (int i = 0; i < (int)lc.powers.size(); i++) {
+            res = prod(res, modpow(small_primes[i], lc.powers[i]));
+        }
+        return res;
+    }
+ 
+};
+
+struct segtree_sum {
+    int n;
+    vector<int> t;
+
+    segtree(int _n) {
+        n = _n;
+        t.resize(4 * n + 5);
+    }
+
+    void pull(int v) {
+        t[v] = t[2 * v] + t[2 * v + 1];
+    }
+
+    int query(int v, int tl, int tr, int l, int r) {
+        if (r < l) return 0;
+        if (l == tl and r == tr) return t[v];
+        int tm = (tl + tr) / 2;
+        return query(2 * v, tl, tm, l, min(tm, r)) + query(2 * v + 1, tm, tr, max(l, tm + 1), r);
+    }
+
+    void update(int v, int tl, int tr, int pos, int val) {
+        if (tl == tr) {
+            t[v] = val;
+        } else {
+            int tm = (tl + tr) / 2;
+            if (pos <= tm) update(2 * v, tl, tm, pos, val);
+            else update(2 * v + 1, tm + 1, tr, pos, val);
+            pull(v);
+        }
+    }
+
+    void update(int pos, int val) {
+        update(1, 0, n - 1, pos, val);
+    }
+
+    int query(int l, int r) {
+        return query(1, 0, n - 1, l, r);
+    }
+};
+
 int main() {
     ios::sync_with_stdio(0);
     cin.tie(0);
