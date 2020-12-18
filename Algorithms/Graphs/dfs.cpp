@@ -6,6 +6,7 @@ using namespace std;
 const int maxn = 1e5 + 5;
 
 int visited[maxn];
+vector<int> adj[maxn];
 
 int dfs(int u) {
     visited[u] = true;
