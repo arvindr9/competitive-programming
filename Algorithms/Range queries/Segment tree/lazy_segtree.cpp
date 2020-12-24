@@ -189,6 +189,55 @@ struct lazy_segtree_max {
     }
 };
 
+struct lazyseg_sum {
+    int n;
+    vector<int> t;
+    vector<int> ladd;
+    lazyseg_sum(int _n) {
+        n = _n;
+        t.resize(4 * n + 5);
+        ladd.resize(4 * n + 5);
+    }
+    void pull(int v) {
+        t[v] = t[2 * v] + t[2 * v + 1];
+    }
+    void push(int v, int tl, int tr) {
+        int tm = (tl + tr) / 2;
+        t[2 * v] += (tm - tl + 1) * ladd[v], t[2 * v + 1] += (tr - tm) * ladd[v];
+        ladd[2 * v] += ladd[v], ladd[2 * v + 1] += ladd[v], ladd[v] = 0;
+    }
+    void update(int v, int tl, int tr, int l, int r, int delta) {
+        if (l > r) return;
+        if (l == tl and r == tr) {
+            ladd[v] += delta, t[v] += (tr - tl + 1) * delta;
+            return;
+        }
+        push(v, tl, tr);
+        int tm = (tl + tr) / 2;
+        update(2 * v, tl, tm, l, min(tm, r), delta), update(2 * v + 1, tm + 1, tr, max(l, tm + 1), r, delta);
+        pull(v);
+    }
+    int query_sum(int v, int tl, int tr, int l, int r) {
+        if (l > r) return 0;
+        if (l == tl and r == tr) return t[v];
+        push(v, tl, tr);
+        int tm = (tl + tr) / 2;
+        return query_sum(2 * v, tl, tm, l, min(r, tm)) + query_sum(2 * v + 1, tm + 1, tr, max(l, tm + 1), r);
+    }
+
+    void update(int l, int r, int delta) {
+        // cout << "updating l: " << l << ", r: " << r << ", delta: " << delta << "\n";
+        update(1, 1, n, l, r, delta);
+    }
+
+    int query_sum(int l, int r) {
+        // cout << "querying l: " << l << ", r: " << r << "\n";
+        int ans = query_sum(1, 1, n, l, r);
+        // cout << "ans: " << ans << "\n";
+        return ans;
+    }
+};
+
 int main() {
     ios::sync_with_stdio(0);
     cin.tie(0);

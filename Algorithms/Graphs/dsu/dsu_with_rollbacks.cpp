@@ -3,7 +3,7 @@
 struct dsu_rollback {
     vector<int> p;
     vector<pi> log;
-    dsu_rollback(int n): p(n, -1) {}
+    dsu_rollback(int n): p(n + 1, -1) {}
     int root(int u) {
         return p[u] < 0 ? u : root(p[u]);
     }

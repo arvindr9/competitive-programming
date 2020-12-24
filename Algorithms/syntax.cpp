@@ -51,6 +51,10 @@ ostringstream oss;
 oss << n;
 result = oss.str();
 
+// or simply:
+result = to_string(n);
+
+
 //string to int
 
 string text = "456";
@@ -74,5 +78,5 @@ while(ss >> s2) {
 
 mt19937 rng(chrono::steady_clock::now().time_since_epoch().count());
 uniform_int_distribution<> distrib1(1, n);
-int x = big-get(distrib1(rng));
+int x = distrib1(rng);
 //can change to mt19937_64 for long longs
