@@ -54,7 +54,7 @@ int2 main() {
                 // d11 + d41 + d21 <= a1
 
     //             // d31 <= min(a2 - (d11 + d21), a3 - d11) -- covers d2 and d3
-    //             // d41 <= min(a1 - (d11 + d21), a3 - d11) -- covers d3 and d1 -- TODO: fix this LOL
+    //             // d41 <= min(a1 - (d11 + d21), a3 - d11) -- covers d3 and d1
     //             // d31 + d41 <= a3 - d11
 
     //             // d32 <= min(b2 - (d12 + d22), b3 - d12)
