@@ -18,3 +18,29 @@ vector<Val> gaussianEliminationMod2(vector<Val> v, int B) {
 	}
 	return t;
 }
+
+// https://codeforces.com/contest/1427/submission/102301098
+
+vector<int> basis;
+ 
+bool sim(int a) {
+    int A = a;
+    for (int b: basis) {
+        A = min(A, A ^ b);
+    }
+    return A;
+}
+ 
+void add(int a) {
+    int A = a;
+    for (int b: basis) {
+        if ((A^b) < A) {
+            A ^= b;
+        }
+    }
+    if (A) {
+        int ind = 0;
+        while (ind < (int)basis.size() and basis[ind] > A) ind++;
+        basis.insert(basis.begin() + ind, A);
+    }
+}
