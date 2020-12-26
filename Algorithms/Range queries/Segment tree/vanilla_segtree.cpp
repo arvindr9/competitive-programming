@@ -19,11 +19,8 @@ template <class T> struct segtree {
             t[v] = val;
         } else {
             int tm = (tl + tr) / 2;
-            if (pos <= tm) {
-                update(2 * v, tl, tm, pos, val);
-            } else {
-                update(2 * v + 1, tm + 1, tr, pos, val);
-            }
+            if (pos <= tm) update(2 * v, tl, tm, pos, val);
+            else update(2 * v + 1, tm + 1, tr, pos, val);
             pull(v);
         }
     }
