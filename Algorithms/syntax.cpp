@@ -80,3 +80,10 @@ mt19937 rng(chrono::steady_clock::now().time_since_epoch().count());
 uniform_int_distribution<> distrib1(1, n);
 int x = distrib1(rng);
 //can change to mt19937_64 for long longs
+
+
+
+// pragmas:
+#pragma GCC optimize("Ofast")
+#pragma GCC optimize ("unroll-loops")
+#pragma GCC target("sse,sse2,sse3,ssse3,sse4,popcnt,abm,mmx,avx,tune=native")

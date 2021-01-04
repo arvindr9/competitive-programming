@@ -1,48 +1,66 @@
+// AC'ed this problem: https://www.spoj.com/problems/NAJPF/
+
 #include <bits/stdc++.h>
-//Source: Animesh Fatehpuria
+
 using namespace std;
- 
 
-// ------ KMP Template -------
+typedef int int2;
+#define int long long
+#define pi pair<int, int>
+#define pb push_back
+#define mp make_pair
+#define eb emplace_back
+#define f first
+#define s second
+const int inf = 1e18;
 
-const int MAX_LEN = 1e5 + 5; 
-int lps[MAX_LEN];
+int t;
 
-// lps[] table is 1 based, strings are 0 based.
-inline void compute_table(string &pattern) {
-	lps[0] = -1, lps[1] = 0;
-	int pref = 0;
-	for (int i = 2; i <= pattern.size(); i++) {
-		while (pref != -1 && pattern[i - 1] != pattern[pref]) {
-			pref = lps[pref];
-		}
-		pref++;
-		lps[i] = pref;
-	}
+
+// taken from cp-algorithms
+vector<int> prefix_function(string st) {
+    int n = st.size();
+    vector<int> last(n);
+    for (int i = 1; i < n; i++) {
+        int j = last[i - 1];
+        while (j > 0 and st[i] != st[j]) {
+            j = last[j - 1];
+        }
+        if (st[i] == st[j]) {
+            j++;
+        }
+        last[i] = j;
+    }
+    return last;
 }
 
-// Function returns frequency of 'pattern' in 'text'
-inline int kmp(string &text, string &pattern){
-	compute_table(pattern);
-	int pref = 0, count = 0;
-	for (int i = 0; i < text.size(); i++) {
-		while (pref != -1 && text[i] != pattern[pref]) {
-			pref = lps[pref];
-		}
-		pref++;
-		if (pref == pattern.size()) {
-			pref = lps[pref];
-			count++;
-		}
-	}
-	return count;
-}
-
-// ---- End of KMP Template ----
- 
-int main() {
-	string text, pattern;
-	while (cin >> text >> pattern) {
-		cout << kmp(text, pattern) << '\n';
-	}
-}
+int2 main() {
+    ios::sync_with_stdio(0);
+    cin.tie(0);
+    cin >> t;
+    while (t--) {
+        string st, tt;
+        cin >> st >> tt;
+        int n = st.size();
+        int m = tt.size();
+        string new_s = tt + '#' + st;
+        vector<int> last = prefix_function(new_s);
+        int len = m + 1 + n;
+        vector<int> indices;
+        for (int i = m + 1; i < len; i++) {
+            // cout << "i: " << i << ", last: " << last[i] << "\n";
+            if (last[i] == m) {
+                indices.pb(i - m + 1 - (m + 1) + 1); // the last +1 is for one-indexing
+            }
+        }
+        if (indices.size()) {
+            cout << indices.size() << "\n";
+            for (int idx: indices) {
+                cout << idx << " ";
+            }
+            cout << "\n";
+        }   else {
+            cout << "Not Found\n";
+        }
+    }
+} 
