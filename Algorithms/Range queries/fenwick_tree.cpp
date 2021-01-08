@@ -11,6 +11,7 @@ int get(int pos) {
     for (int i = pos; i > 0; i -= i & -1) {
         ret += bit[i];
     }
+    return ret;
 }
 
 int upd(int pos, int delta) {
