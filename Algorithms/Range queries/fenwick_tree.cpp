@@ -8,7 +8,7 @@ int bit[maxn];
 
 int get(int pos) {
     int ret = 0;
-    for (int i = pos; i > 0; i -= i & -1) {
+    for (int i = pos; i > 0; i -= i & -i) {
         ret += bit[i];
     }
     return ret;
