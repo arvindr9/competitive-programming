@@ -11,16 +11,29 @@ typedef long long ll;
 
 const ll mod = 1e9 + 7;
 
-ll reduce(ll a) {
-    return ((a % mod) + mod) % mod;
+inline int reduce(int a) {
+    return (a %= mod) < 0 ? a + mod : a;
 }
 
-ll prod(ll a, ll b) {
+inline int add(int a, int b) {
+    return reduce(a + b);
+}
+
+inline int prod(int a, int b) {
     return reduce(a * b);
 }
 
-ll add(ll a, ll b) {
-    return reduce(a + b);
+inline int modpow(int a, int pw) {
+    if (pw == 0) return 1;
+    if (pw % 2 == 0) {
+        int res = modpow(a, pw / 2);
+        return prod(res, res);
+    }
+    return prod(a, modpow(a, pw - 1));
+}
+
+inline int inv(int a) {
+    return modpow(a, mod - 2);
 }
 
 struct matrix {

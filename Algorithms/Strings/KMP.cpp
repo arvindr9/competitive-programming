@@ -34,6 +34,22 @@ vector<int> prefix_function(string st) {
     return last;
 }
 
+void compute_automaton(string st, vector<vector<int>>& aut) {
+    st += '#';
+    int n = st.size();
+    vector<int> last = prefix_function(st);
+    aut.assign(n, vector<int>(26));
+    for (int i = 0; i < n; i++) {
+        for (int c = 0; c < 26; c++) {
+            if (i > 0 && 'a' + c != st[i])
+                aut[i][c] = aut[last[i-1]][c];
+            else
+                aut[i][c] = i + ('a' + c == st[i]);
+        }
+    }
+}
+
+
 int2 main() {
     ios::sync_with_stdio(0);
     cin.tie(0);

@@ -10,23 +10,22 @@ typedef int int2;
 #define eb emplace_back
 #define f first
 #define s second
-const int inf = 1e18;
+const int inf = 1e12;
 
 int t;
+
+void submit(int tt, int ans) {
+    cout << "Case #" << tt << ": " << ans << "\n";
+}
 
 int2 main() {
     ios::sync_with_stdio(0);
     cin.tie(0);
+    // freopen("consistency_chapter_1_input.txt", "r", stdin);
+    // freopen("A.out", "w", stdout);
     cin >> t;
-    while (t--) {
-
+    for (int tt = 1; tt <= t; tt++) {
+        // do stuff
+        submit(tt, ans);
     }
 } 
-
-/* stuff you should look for
-	* int overflow, array bounds
-	* special cases (n=1?)
-	* do smth instead of nothing and stay organized
-	* WRITE STUFF DOWN
-	* DON'T GET STUCK ON ONE APPROACH
-*/

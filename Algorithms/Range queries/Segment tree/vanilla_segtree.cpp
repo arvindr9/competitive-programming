@@ -5,11 +5,7 @@ template <class T> struct segtree {
     T deft;
     segtree(int n): t(4 * n + 5), n(n), deft(make_pair(0LL, 0LL)) {}
     T f(T a, T b) {
-        if (a.f == b.f) {
-            if (a.s < b.s) return a;
-            else return b;
-        }
-        return max(a, b);
+        return a + b;
     }
     void pull(int v) {
         t[v] = f(t[2 * v], t[2 * v + 1]);

@@ -90,3 +90,110 @@ int2 main() {
     form_compadj();
     
 }
+
+// Alternate impl??
+
+#include <bits/stdc++.h>
+
+using namespace std;
+
+typedef int int2;
+#define int long long
+#define pi pair<int, int>
+#define pb push_back
+#define mp make_pair
+#define eb emplace_back
+#define f first
+#define s second
+const int inf = 1e18;
+
+int t;
+
+int n, m;
+
+const int maxn = 2e5 + 5;
+vector<pi> adj[maxn];
+int low[maxn], pre[maxn], comp[maxn];
+int was[maxn];
+bool onstk[maxn];
+int timer = 0;
+int comptimer = 0;
+vector<int> stk;
+
+int cyc[maxn];
+int gcds[maxn];
+int depth[maxn];
+
+void dfs1(int u, int p) {
+    pre[u] = low[u] = ++timer;
+    onstk[u] = true;
+    stk.pb(u);
+    for (auto [v, w]: adj[u]) {
+        if (was[v]) {
+            if (onstk[v]) {
+                // back(stack?) edge
+                low[u] = min(low[u], pre[v]);
+                int len = depth[u] - depth[v] + w;
+            }
+            continue;
+        }
+        was[v] = true;
+        depth[v] = depth[u] + w;
+        dfs1(v, u);
+        low[u] = min(low[u], low[v]);
+    }
+    if (pre[u] == low[u]) {
+        // process component
+        comptimer++;
+        while (stk.back() != u) {
+            int v = stk.back();
+            comp[v] = comptimer;
+            onstk[v] = false;
+            stk.pop_back();
+        }
+        comp[u] = comptimer;
+        onstk[u] = false;
+        stk.pop_back();
+    }
+}
+
+
+int2 main() {
+    ios::sync_with_stdio(0);
+    cin.tie(0);
+    cin >> n >> m;
+    for (int i = 1; i <= m; i++) {
+        int u, v, w;
+        cin >> u >> v >> w;
+        adj[u].pb({v, w});
+    }
+    for (int i = 1; i <= n; i++) if (!was[i]) was[i] = true, dfs1(i, i);
+    for (int i = 1; i <= n; i++) {
+        int col = comp[i];
+        gcds[col] = __gcd(gcds[col], cyc[i]);
+    }
+
+    int q;
+    cin >> q;
+    while (q--) {
+        int u, st, tot;
+        cin >> u >> st >> tot;
+        int tar = (tot - st) % tot;
+        int gcd_val = gcds[comp[u]];
+        // cout << "u: " << u << ", gcd_val: " << gcd_val << ", tar: " << tar << "\n";
+        // goal: attain tar % tot
+        if (tar == 0) {
+            cout << "YES\n";
+        } else if (gcd_val == 0) {
+            cout << "NO\n";
+        } else {
+            int min_possible = __gcd(gcd_val, tot);
+            if (tar % min_possible == 0) {
+                cout << "YES\n";
+            } else {
+                cout << "NO\n";
+            }
+        }
+    }
+
+} 

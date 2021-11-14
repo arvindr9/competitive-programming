@@ -8,8 +8,8 @@ typedef int int2;
 
 typedef long long ll;
 
-const ll mod = 1e9 + 7;
-const int maxp = 1e6 + 5;
+const int mod = 1e9 + 7;
+const int maxn = 1e6 + 5;
 
 inline int reduce(int a) {
     return (a %= mod) < 0 ? a + mod : a;
@@ -35,13 +35,15 @@ inline int modpow(int a, int pw) {
 inline int inv(int a) {
     return modpow(a, mod - 2);
 }
-int fact[maxp];
+
+int fact[maxn];
+int ifact[maxn];
 
 inline int binom(int a, int b) {
-    if (b > a) return 0;
+    if (b > a or a < 0) return 0;
     int num = fact[a];
-    int den = prod(fact[b], fact[a - b]);
-    return prod(num, inv(den));
+    int den = prod(ifact[b], ifact[a-b]);
+    return prod(num, den);
 }
 
 inline int cayley(int num, int s) {
