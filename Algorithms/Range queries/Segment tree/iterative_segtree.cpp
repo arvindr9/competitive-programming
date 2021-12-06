@@ -1,12 +1,16 @@
-template<class T, class F> struct segtree {
+template<class T> struct segtree {
     int n;
     vector<T> t;
     T deft;
-    F f; // will be min or max or something very similar
     // point update, range query
-    segtree(int _n, F _f, T _deft): n(_n + 1), deft(_deft), f(_f) {
-        t.resize(2 * n, deft);
+    segtree(int _n): n(_n + 1) {
+        t.resize(2 * _n, deft);
     }
+
+    T f(T a, T b) {
+        return a + b;
+    }
+
     void update(int p, T value) {
         for (t[p += n] = value; p > 1; p >>= 1) t[p>>1] = f(t[p], t[p^1]);
     }
