@@ -79,17 +79,17 @@ F: Figured it out not that late, but underestimated time to code C
 C: weird to think about negative indexing, made too large of a constant factor (maybe I should change my style for convolution code?)
 E: I think I have a 1D version but details might be finnicky?
 
-## Mon Dec 6
+# Mon Dec 6
 
-Upsolving SERC 21
+## Upsolving SERC 21
 
 E: Tried implementing the 1D version. Struggled with indexing, and later realized I had a wrong assumption, as I can only use the segtree for j s.t. 1 <= j <= i - 2
 when computing dp[i]. Spent too long on this problem (AC after 2 hr 30 min)
 G, K, M: bricked thinking about it, Jeffrey told me later how to do G and a high level hint for K (look at the smallest and second smallest leaf)
 
-## Tue Dec 7
+# Tue Dec 7
 
-Upsolving SERC 21
+## Upsolving SERC 21
 
 K: Coded something slightly wrong (I tried taking a path from the smallest to second smallest, then third smallest to 4th smallest and so on),
 later fixed it after thinking about it for a while.
