@@ -92,5 +92,6 @@ G, K, M: bricked thinking about it, Jeffrey told me later how to do G and a high
 Upsolving SERC 21
 
 K: Coded something slightly wrong (I tried taking a path from the smallest to second smallest, then third smallest to 4th smallest and so on),
-later fixed it.
+later fixed it after thinking about it for a while.
+
 
