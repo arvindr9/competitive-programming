@@ -52,7 +52,9 @@ C: was skeptical that binsearch would be too hard for a C, spent a too much time
 D: had a wrong assumption for the entire contest, realized it was easy when I was upsolving it
 E: had some observations but unsure (maybe i was also a bit demoralized that i hadn't gotten D)
 
-## Sun Nov 28 (https://codeforces.com/contest/1609, Deltix)
+## Sun Nov 28 
+
+### (https://codeforces.com/contest/1609, Deltix)
 
 B: wrote too much code, could've been much faster
 C: Mixup between n and ne, waited too long to write a brute force (15 min time diff between WA and AC)
@@ -61,9 +63,9 @@ E: should've been free, same as https://codeforces.com/problemset/problem/750/
 
 Issues: speed (for ~2300 perf) and missing a free problem (for 2500+ perf)
 
-# Tue Nov 29
+## Tue Nov 29
 
-## Educational 117 (https://codeforces.com/contest/1612)
+### Educational 117 (https://codeforces.com/contest/1612)
 
 B: Should've been a 5-min prob
 C: ok
@@ -71,7 +73,7 @@ D: had slightly wrong ideas (WA at 0:31) and eventually got it at 0:43
 E: a bit on the slow side to impl (30 min), 20 more min to fix. Need more practice
 G: kinda too late to think about it, but I think I can do it now
 
-## SERC 21 (https://codeforces.com/gym/103438)
+### SERC 21 (https://codeforces.com/gym/103438)
 
 N: Hard for me but many ppl solved it within 8 min
 J: Had some observations, Jeffrey helped me figure it out, ez 13 min AC
@@ -79,17 +81,17 @@ F: Figured it out not that late, but underestimated time to code C
 C: weird to think about negative indexing, made too large of a constant factor (maybe I should change my style for convolution code?)
 E: I think I have a 1D version but details might be finnicky?
 
-# Mon Dec 6
+## Mon Dec 6
 
-## Upsolving SERC 21
+### Upsolving SERC 21
 
 E: Tried implementing the 1D version. Struggled with indexing, and later realized I had a wrong assumption, as I can only use the segtree for j s.t. 1 <= j <= i - 2
 when computing dp[i]. Spent too long on this problem (AC after 2 hr 30 min)
 G, K, M: bricked thinking about it, Jeffrey told me later how to do G and a high level hint for K (look at the smallest and second smallest leaf)
 
-# Tue Dec 7
+## Tue Dec 7
 
-## Upsolving SERC 21
+### Upsolving SERC 21
 
 K: Coded something slightly wrong (I tried taking a path from the smallest to second smallest, then third smallest to 4th smallest and so on),
 later fixed it after thinking about it for a while.
