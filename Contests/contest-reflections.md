@@ -83,8 +83,8 @@ E: I think I have a 1D version but details might be finnicky?
 
 Upsolving SERC 21
 
-E: Tried implementing the 1D version. Struggled with indexing, and later realized a wrong assumption, as I can only use the segtree for j s.t. 1 <= j <= i - 2
-when computing dp[i]
+E: Tried implementing the 1D version. Struggled with indexing, and later realized I had a wrong assumption, as I can only use the segtree for j s.t. 1 <= j <= i - 2
+when computing dp[i]. Spent too long on this problem (AC after 2 hr 30 min)
 G, K, M: bricked thinking about it, Jeffrey told me later how to do G and a high level hint for K (look at the smallest and second smallest leaf)
 
 ## Tue Dec 7
